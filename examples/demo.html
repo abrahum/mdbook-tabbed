@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div class="tabbed-set">
+        <div class="tabbed-labels">
+            <input checked="checked" id="__tabbed_0_0">
+            <input id="__tabbed_0_1">
+            <label for="__tabbed_0_0">Tab 1</label>
+            <label for="__tabbed_0_1">Tab 2</label>
+        </div>
+        <div class="tabbed-content">
+            <div id="__tabbed_0_0_div">
+                <ul>
+                    <li> <input type="checkbox" checked> 1 content</li>
+                    <li>Tab 1 content</li>
+                </ul>
+            </div>
+            <div id="__tabbed_0_1_div" style="display: none;">
+                <p>Tab 2 content</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabbed-set">
+        <input checked="checked" id="__tabbed_1_0">
+        <input id="__tabbed_1_1">
+        <input id="__tabbed_1_2">
+        <div class="tabbed-labels">
+            <label for="__tabbed_1_0">Tab 1</label>
+            <label for="__tabbed_1_1">Tab 2</label>
+            <label for="__tabbed_1_2">Tab 3</label>
+        </div>
+        <div class="tabbed-content">
+            <div id="__tabbed_1_0_div">
+                <ul>
+                    <li> <input type="checkbox" checked> 1 content</li>
+                    <li>Tab 1 content</li>
+                </ul>
+            </div>
+            <div id="__tabbed_1_1_div" style="display: none;">
+                <p>Tab 2 content</p>
+            </div>
+            <div id="__tabbed_1_2_div" style="display: none;">
+                <p>Tab 3 content</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .tabbed-labels>input {
+            display: none;
+        }
+
+        .tabbed-labels>label {
+            padding: 1rem 1.5rem;
+            border-bottom: .2rem solid transparent;
+            border-color: var(--scrollbar);
+        }
+
+        .tabbed-contents {
+            box-shadow: 0 -0.1rem var(--sidebar-non-existant);
+        }
+    </style>
+    <script>
+        window.onload = () => {
+            const tabs = document.querySelectorAll(".tabbed-labels>input");
+            for (const tab of tabs) {
+                tab.addEventListener("click", () => {
+                    if (tab.checked) {
+                        return
+                    }
+                    const inputs = tab.closest(".tabbed-labels").querySelectorAll("input");
+                    for (const input of inputs) {
+                        if (input.checked) {
+                            console.log(input.id);
+                            document.getElementById(`${input.id}_div`).style.display = "none";
+                            input.checked = false
+                        }
+                    }
+                    document.querySelector(`#${tab.id}_div`).style.display = "block";
+                    tab.checked = true
+                })
+            }
+        }
+    </script>
+</body>
+
+</html>

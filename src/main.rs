@@ -14,7 +14,7 @@ fn make_app() -> App<'static, 'static> {
 
 fn main() {
     let matches = make_app().get_matches();
-    let tabbed = tabbed::Tabbed {};
+    let tabbed = tabbed::Tabbed::new();
     if let Some(_sub_args) = matches.subcommand_matches("supports") {
         println!("yes");
     } else if let Err(e) = preprocessing(&tabbed) {
@@ -25,7 +25,7 @@ fn main() {
 
 fn preprocessing(pre: &dyn Preprocessor) -> Result<(), mdbook::errors::Error> {
     let (ctx, book) = CmdPreprocessor::parse_input(std::io::stdin())?;
-    pre.run(&ctx, book.clone())?;
+    let book = pre.run(&ctx, book)?;
     serde_json::to_writer(std::io::stdout(), &book)?;
     Ok(())
 }
